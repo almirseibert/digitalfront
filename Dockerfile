@@ -1,20 +1,38 @@
-# Usar a imagem oficial do Node.js (versão 18 LTS baseada no Alpine, que é super leve)
-FROM node:18-alpine
+# ==========================================
+# Estágio 1: Build (Compilação do React/Vite)
+# ==========================================
+FROM node:18-alpine AS builder
 
-# Definir o diretório de trabalho dentro do container
+# Define o diretório de trabalho
 WORKDIR /app
 
-# Copiar os arquivos de dependências primeiro (isso otimiza o cache do Docker)
+# Copia os arquivos de dependência
 COPY package*.json ./
 
-# Instalar as dependências do projeto
+# Instala as dependências
 RUN npm install
 
-# Copiar o restante do código do seu backend para dentro do container
+# Copia todo o código do frontend para o container
 COPY . .
 
-# Expor a porta que o seu servidor Node.js utiliza (conforme configurado no EasyPanel)
-EXPOSE 3000
+# Roda o comando de build (gera a pasta /dist com HTML/CSS/JS otimizados)
+RUN npm run build
 
-# Comando final para iniciar o servidor
-CMD ["node", "server.js"]
+# ==========================================
+# Estágio 2: Servidor Web (Nginx)
+# ==========================================
+FROM nginx:alpine
+
+# Copia os arquivos "buildados" da etapa anterior para a pasta pública do Nginx
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# (Opcional mas recomendado) Copia uma configuração customizada do Nginx 
+# para garantir que as rotas do React (React Router) funcionem corretamente.
+# Se você não tiver esse arquivo ainda, o Nginx usará o padrão.
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expõe a porta padrão da web (o EasyPanel fará o proxy reverso para esta porta)
+EXPOSE 80
+
+# Inicia o servidor Nginx
+CMD ["nginx", "-g", "daemon off;"]
