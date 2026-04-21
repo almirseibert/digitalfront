@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import KanbanCRM from './pages/KanbanCRM.jsx' // Certifique-se de que o KanbanCRM que criámos está nesta pasta
+import App from './App.jsx' // Mudou de KanbanCRM para App
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <KanbanCRM />
+    <App />
   </React.StrictMode>,
 )
