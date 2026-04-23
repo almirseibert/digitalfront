@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Search, Bell, Settings, LayoutDashboard, Users, 
   DollarSign, FileText, Phone, CheckCircle, XCircle, 
   MessageCircle, Plus, MoreVertical, Briefcase 
 } from 'lucide-react';
 
-// Dados iniciais simulando o banco de dados (MySQL)
 const initialLeads = [
   { id: 1, cliente: "Ana Paula", empresa: "Moda Essencial", valor: 3500.00, fase: "Prospecção", telefone: "5511999999999" },
   { id: 2, cliente: "Marcos Silva", empresa: "Tech Solutions", valor: 12000.00, fase: "Prospecção", telefone: "5511888888888" },
@@ -25,20 +25,18 @@ export default function KanbanCRM() {
   const [leads, setLeads] = useState(initialLeads);
   const [toast, setToast] = useState(null);
 
-  // Manipuladores de Drag and Drop (Arrastar e Soltar)
   const handleDragStart = (e, leadId) => {
     e.dataTransfer.setData('leadId', leadId);
   };
 
   const handleDragOver = (e) => {
-    e.preventDefault(); // Necessário para permitir o drop
+    e.preventDefault(); 
   };
 
   const handleDrop = (e, novaFase) => {
     e.preventDefault();
     const leadId = parseInt(e.dataTransfer.getData('leadId'));
     
-    // Atualiza a fase do lead
     const leadAtualizado = leads.find(l => l.id === leadId);
     if (!leadAtualizado || leadAtualizado.fase === novaFase) return;
 
@@ -46,7 +44,6 @@ export default function KanbanCRM() {
       lead.id === leadId ? { ...lead, fase: novaFase } : lead
     ));
 
-    // Lógica de Automação do WhatsApp (Simulação do Backend)
     if (novaFase === 'Proposta') {
       showToast(`Automação: Mensagem de "Proposta" enviada para o WhatsApp de ${leadAtualizado.cliente} 🚀`, 'success');
     } else if (novaFase === 'Ganho') {
@@ -54,7 +51,6 @@ export default function KanbanCRM() {
     }
   };
 
-  // Função para exibir notificações (Toasts)
   const showToast = (message, type = 'info') => {
     setToast({ message, type });
     setTimeout(() => setToast(null), 4000);
@@ -71,27 +67,27 @@ export default function KanbanCRM() {
         </div>
         
         <nav className="flex-1 px-4 py-4 space-y-2 overflow-y-auto">
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+          <Link to="/dashboard" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
             <LayoutDashboard size={20} /> Início
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-600 text-white shadow-lg shadow-blue-900/20">
+          </Link>
+          <Link to="/crm" className="flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-600 text-white shadow-lg shadow-blue-900/20">
             <Briefcase size={20} /> Funil de Vendas (CRM)
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+          </Link>
+          <Link to="/clientes" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
             <Users size={20} /> Clientes
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+          </Link>
+          <Link to="/financeiro" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
             <DollarSign size={20} /> Financeiro
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+          </Link>
+          <Link to="/relatorios" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
             <FileText size={20} /> Relatórios
-          </a>
+          </Link>
         </nav>
 
         <div className="p-4 border-t border-slate-800">
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+          <Link to="/login" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
             <Settings size={20} /> Configurações
-          </a>
+          </Link>
         </div>
       </aside>
 
@@ -222,7 +218,6 @@ export default function KanbanCRM() {
         </div>
       )}
 
-      {/* Estilos CSS Nativos embutidos para custom scrollbar e animações simples */}
       <style dangerouslySetInnerHTML={{__html: `
         .custom-scrollbar::-webkit-scrollbar {
           width: 6px;

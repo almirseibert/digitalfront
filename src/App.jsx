@@ -1,5 +1,5 @@
 import React from 'react';
-import { MemoryRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from 'react-router-dom';
 
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';

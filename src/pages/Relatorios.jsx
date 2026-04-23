@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { 
   LayoutDashboard, Users, DollarSign, FileText, Briefcase, 
   BarChart2, PieChart, TrendingUp, Download, Calendar 
@@ -16,21 +17,21 @@ export default function Relatorios() {
         </div>
         
         <nav className="flex-1 px-4 py-4 space-y-2 overflow-y-auto">
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+          <Link to="/dashboard" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
             <LayoutDashboard size={20} /> Início
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+          </Link>
+          <Link to="/crm" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
             <Briefcase size={20} /> Funil de Vendas (CRM)
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+          </Link>
+          <Link to="/clientes" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
             <Users size={20} /> Clientes
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+          </Link>
+          <Link to="/financeiro" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
             <DollarSign size={20} /> Financeiro
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-600 text-white shadow-lg shadow-blue-900/20">
+          </Link>
+          <Link to="/relatorios" className="flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-600 text-white shadow-lg shadow-blue-900/20">
             <FileText size={20} /> Relatórios
-          </a>
+          </Link>
         </nav>
       </aside>
 

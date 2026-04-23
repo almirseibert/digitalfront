@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   LayoutDashboard, Users, DollarSign, FileText, Briefcase, 
   Search, Plus, Filter, Download, ArrowUpRight, ArrowDownRight, 
@@ -6,7 +7,6 @@ import {
 } from 'lucide-react';
 
 export default function Financeiro() {
-  // Dados simulados para os lançamentos financeiros
   const [lancamentos, setLancamentos] = useState([
     { id: 1, data: "21/04/2026", descricao: "Sinal - Projeto IA Fast Logística", categoria: "Serviços", tipo: "RECEITA", valor: 4250.00, status: "PAGO" },
     { id: 2, data: "22/04/2026", descricao: "Hospedagem Servidores AWS", categoria: "Infraestrutura", tipo: "DESPESA", valor: 350.00, status: "PENDENTE" },
@@ -32,21 +32,21 @@ export default function Financeiro() {
         </div>
         
         <nav className="flex-1 px-4 py-4 space-y-2 overflow-y-auto">
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+          <Link to="/dashboard" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
             <LayoutDashboard size={20} /> Início
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+          </Link>
+          <Link to="/crm" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
             <Briefcase size={20} /> Funil de Vendas (CRM)
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+          </Link>
+          <Link to="/clientes" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
             <Users size={20} /> Clientes
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-600 text-white shadow-lg shadow-blue-900/20">
+          </Link>
+          <Link to="/financeiro" className="flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-600 text-white shadow-lg shadow-blue-900/20">
             <DollarSign size={20} /> Financeiro
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
+          </Link>
+          <Link to="/relatorios" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
             <FileText size={20} /> Relatórios
-          </a>
+          </Link>
         </nav>
       </aside>
 
