@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { 
-  LayoutDashboard, Users, DollarSign, FileText, Settings, Briefcase, 
   Search, Plus, MoreHorizontal, Filter, Mail, Phone, Edit2, Trash2 
 } from 'lucide-react';
+import Sidebar from '../components/Sidebar';
 
 export default function ClientesList() {
   const [clientes, setClientes] = useState([
@@ -26,36 +25,9 @@ export default function ClientesList() {
   return (
     <div className="flex h-screen bg-slate-50 font-sans text-slate-800 overflow-hidden">
       
-      {/* Sidebar Lateral */}
-      <aside className="w-64 bg-slate-900 text-slate-300 flex flex-col hidden md:flex shadow-xl z-20">
-        <div className="p-6 flex items-center gap-3">
-          <div className="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl">+</div>
-          <span className="text-xl font-bold text-white tracking-wide">digit@l <span className="text-blue-400">plus+</span></span>
-        </div>
-        
-        <nav className="flex-1 px-4 py-4 space-y-2 overflow-y-auto">
-          <Link to="/dashboard" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
-            <LayoutDashboard size={20} /> Início
-          </Link>
-          <Link to="/crm" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
-            <Briefcase size={20} /> Funil de Vendas (CRM)
-          </Link>
-          <Link to="/clientes" className="flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-600 text-white shadow-lg shadow-blue-900/20">
-            <Users size={20} /> Clientes
-          </Link>
-          <Link to="/financeiro" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
-            <DollarSign size={20} /> Financeiro
-          </Link>
-          <Link to="/relatorios" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
-            <FileText size={20} /> Relatórios
-          </Link>
-        </nav>
-      </aside>
+      <Sidebar />
 
-      {/* Conteúdo Principal */}
       <main className="flex-1 flex flex-col min-w-0 overflow-hidden">
-        
-        {/* Header Superior */}
         <header className="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-6 shrink-0">
           <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-2">Gestão de Clientes</h1>
           <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold border border-blue-200 cursor-pointer">
@@ -63,7 +35,6 @@ export default function ClientesList() {
           </div>
         </header>
 
-        {/* Barra de Ferramentas (Toolbar) */}
         <div className="p-6 border-b border-slate-200 bg-white shrink-0 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <div className="relative w-full sm:w-80">
@@ -84,7 +55,6 @@ export default function ClientesList() {
           </button>
         </div>
 
-        {/* Tabela de Clientes */}
         <div className="flex-1 overflow-auto p-6">
           <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
             <table className="w-full text-left border-collapse">
@@ -100,8 +70,6 @@ export default function ClientesList() {
               <tbody className="divide-y divide-slate-100">
                 {clientes.map((cliente) => (
                   <tr key={cliente.id} className="hover:bg-slate-50/80 transition-colors group">
-                    
-                    {/* Nome e Empresa */}
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
                         <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold">
@@ -113,28 +81,20 @@ export default function ClientesList() {
                         </div>
                       </div>
                     </td>
-
-                    {/* Email e Telefone */}
                     <td className="px-6 py-4">
                       <div className="space-y-1">
                         <p className="text-sm text-slate-600 flex items-center gap-2"><Mail size={14} className="text-slate-400"/> {cliente.email}</p>
                         <p className="text-sm text-slate-600 flex items-center gap-2"><Phone size={14} className="text-slate-400"/> {cliente.telefone}</p>
                       </div>
                     </td>
-
-                    {/* Origem */}
                     <td className="px-6 py-4 hidden md:table-cell">
                       <span className="text-sm text-slate-600">{cliente.origem}</span>
                     </td>
-
-                    {/* Status */}
                     <td className="px-6 py-4">
                       <span className={`text-xs font-semibold px-2.5 py-1 rounded-full border ${getStatusColor(cliente.status)}`}>
                         {cliente.status}
                       </span>
                     </td>
-
-                    {/* Ações */}
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                         <button className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Editar">
@@ -148,13 +108,11 @@ export default function ClientesList() {
                         </button>
                       </div>
                     </td>
-
                   </tr>
                 ))}
               </tbody>
             </table>
             
-            {/* Paginação Simples */}
             <div className="px-6 py-4 border-t border-slate-200 flex items-center justify-between bg-slate-50">
               <span className="text-sm text-slate-500">A mostrar <span className="font-medium text-slate-800">5</span> de <span className="font-medium text-slate-800">124</span> clientes</span>
               <div className="flex gap-2">

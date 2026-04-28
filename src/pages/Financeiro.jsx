@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { 
-  LayoutDashboard, Users, DollarSign, FileText, Briefcase, 
   Search, Plus, Filter, Download, ArrowUpRight, ArrowDownRight, 
-  MoreHorizontal, CreditCard, Wallet 
+  MoreHorizontal, Wallet 
 } from 'lucide-react';
+import Sidebar from '../components/Sidebar';
 
 export default function Financeiro() {
   const [lancamentos, setLancamentos] = useState([
@@ -24,36 +23,9 @@ export default function Financeiro() {
   return (
     <div className="flex h-screen bg-slate-50 font-sans text-slate-800 overflow-hidden">
       
-      {/* Sidebar Lateral */}
-      <aside className="w-64 bg-slate-900 text-slate-300 flex flex-col hidden md:flex shadow-xl z-20 shrink-0">
-        <div className="p-6 flex items-center gap-3">
-          <div className="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl">+</div>
-          <span className="text-xl font-bold text-white tracking-wide">digit@l <span className="text-blue-400">plus+</span></span>
-        </div>
-        
-        <nav className="flex-1 px-4 py-4 space-y-2 overflow-y-auto">
-          <Link to="/dashboard" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
-            <LayoutDashboard size={20} /> Início
-          </Link>
-          <Link to="/crm" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
-            <Briefcase size={20} /> Funil de Vendas (CRM)
-          </Link>
-          <Link to="/clientes" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
-            <Users size={20} /> Clientes
-          </Link>
-          <Link to="/financeiro" className="flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-600 text-white shadow-lg shadow-blue-900/20">
-            <DollarSign size={20} /> Financeiro
-          </Link>
-          <Link to="/relatorios" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
-            <FileText size={20} /> Relatórios
-          </Link>
-        </nav>
-      </aside>
+      <Sidebar />
 
-      {/* Conteúdo Principal */}
       <main className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        
-        {/* Header Superior */}
         <header className="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-6 shrink-0 sticky top-0 z-10">
           <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-2">Controlo Financeiro</h1>
           <div className="w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-700 font-bold border border-blue-200 cursor-pointer">
@@ -62,8 +34,6 @@ export default function Financeiro() {
         </header>
 
         <div className="p-6 max-w-7xl mx-auto w-full space-y-6">
-          
-          {/* Cards de Resumo Financeiro */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
               <div className="flex justify-between items-start mb-2">
@@ -90,7 +60,6 @@ export default function Financeiro() {
             </div>
           </div>
 
-          {/* Barra de Ferramentas */}
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-4 rounded-xl border border-slate-200 shadow-sm">
             <div className="flex items-center gap-3 w-full sm:w-auto">
               <div className="relative w-full sm:w-80">
@@ -112,7 +81,6 @@ export default function Financeiro() {
             </div>
           </div>
 
-          {/* Tabela Financeira */}
           <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left border-collapse min-w-[800px]">

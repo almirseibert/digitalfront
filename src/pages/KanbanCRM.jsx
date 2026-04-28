@@ -20,7 +20,7 @@ export default function KanbanCRM() {
   const [isLoading, setIsLoading] = useState(true);
   const [toast, setToast] = useState(null);
 
-  // 1. Hook para carregar as negociações do backend ao abrir a página
+  // Hook para carregar as negociações do backend ao abrir a página
   useEffect(() => {
     carregarNegociacoes();
   }, []);
@@ -28,7 +28,6 @@ export default function KanbanCRM() {
   const carregarNegociacoes = async () => {
     try {
       setIsLoading(true);
-      // Chama a rota GET /api/negociacoes que você criou no server.js
       const response = await api.get('/negociacoes');
       if (response.data.success) {
         setLeads(response.data.data);
@@ -49,7 +48,7 @@ export default function KanbanCRM() {
     e.preventDefault(); 
   };
 
-  // 2. Atualiza a fase via Drag & Drop e dispara no backend
+  // Atualiza a fase via Drag & Drop e dispara no backend
   const handleDrop = async (e, novaFase) => {
     e.preventDefault();
     const leadId = parseInt(e.dataTransfer.getData('leadId'));
@@ -57,18 +56,15 @@ export default function KanbanCRM() {
     const leadAtualizado = leads.find(l => l.id === leadId);
     if (!leadAtualizado || leadAtualizado.fase === novaFase) return;
 
-    // Atualização otimista: atualiza a interface instantaneamente para o usuário
     const leadsAntigos = [...leads];
     setLeads(leads.map(lead => 
       lead.id === leadId ? { ...lead, fase: novaFase } : lead
     ));
 
     try {
-      // Chama a rota PUT /api/negociacoes/:id/fase do seu backend
       const response = await api.put(`/negociacoes/${leadId}/fase`, { novaFase });
       
       if (response.data.success) {
-        // Se o backend disparou a automação do WhatsApp (como configurado no server.js)
         if (response.data.automacao_disparada) {
            showToast(`Automação Ativa: Mensagem enviada para ${leadAtualizado.cliente} no WhatsApp 🚀`, 'success');
         } else if (novaFase === 'Ganho') {
@@ -79,7 +75,6 @@ export default function KanbanCRM() {
       }
     } catch (error) {
       console.error("Erro ao atualizar a fase:", error);
-      // Reverte a atualização otimista na tela se a chamada falhar
       setLeads(leadsAntigos);
       showToast("Erro ao sincronizar com o banco de dados.", "error");
     }
@@ -134,7 +129,7 @@ export default function KanbanCRM() {
           </button>
         </div>
 
-        {/* Quadro Kanban (Área de Arrastar e Soltar) */}
+        {/* Quadro Kanban */}
         <div className="flex-1 overflow-x-auto overflow-y-hidden p-6">
           {isLoading ? (
             <div className="flex w-full h-full items-center justify-center">
@@ -152,7 +147,6 @@ export default function KanbanCRM() {
                   onDragOver={handleDragOver}
                   onDrop={(e) => handleDrop(e, fase.id)}
                 >
-                  {/* Cabeçalho da Coluna */}
                   <div className={`px-4 py-3 border-b border-slate-200 rounded-t-xl flex justify-between items-center ${fase.cor.split(' ')[0]}`}>
                     <h3 className={`font-semibold text-sm ${fase.cor.split(' ')[1]}`}>{fase.titulo}</h3>
                     <span className="bg-white/60 text-slate-700 text-xs font-bold px-2 py-0.5 rounded-full">
@@ -160,7 +154,6 @@ export default function KanbanCRM() {
                     </span>
                   </div>
 
-                  {/* Lista de Cartões (Leads) */}
                   <div className="p-3 overflow-y-auto flex-1 space-y-3 custom-scrollbar">
                     {leads.filter(l => l.fase === fase.id).map(lead => (
                       <div 
@@ -199,7 +192,6 @@ export default function KanbanCRM() {
                       </div>
                     ))}
                     
-                    {/* Espaço vazio para facilitar o drop se a coluna estiver vazia */}
                     {leads.filter(l => l.fase === fase.id).length === 0 && (
                       <div className="h-20 border-2 border-dashed border-slate-200 rounded-lg flex items-center justify-center text-slate-400 text-sm">
                         Arraste para cá
@@ -213,7 +205,6 @@ export default function KanbanCRM() {
         </div>
       </main>
 
-      {/* Toast Notification (Alerta do Sistema/WhatsApp) */}
       {toast && (
         <div className={`fixed bottom-6 right-6 px-6 py-4 rounded-lg shadow-xl border flex items-center gap-3 transform transition-all duration-300 z-50 animate-in slide-in-from-bottom-5 ${
           toast.type === 'success' ? 'bg-white border-green-200 text-slate-800' : 'bg-slate-800 text-white border-slate-700'
@@ -224,16 +215,9 @@ export default function KanbanCRM() {
       )}
 
       <style dangerouslySetInnerHTML={{__html: `
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: transparent;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background-color: #cbd5e1;
-          border-radius: 20px;
-        }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background-color: #cbd5e1; border-radius: 20px; }
       `}} />
     </div>
   );

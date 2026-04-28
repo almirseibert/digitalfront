@@ -1,44 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { 
-  LayoutDashboard, Users, DollarSign, FileText, Briefcase, 
-  BarChart2, PieChart, TrendingUp, Download, Calendar 
-} from 'lucide-react';
+import { BarChart2, PieChart, TrendingUp, Download, Calendar } from 'lucide-react';
+import Sidebar from '../components/Sidebar';
 
 export default function Relatorios() {
   return (
     <div className="flex h-screen bg-slate-50 font-sans text-slate-800 overflow-hidden">
       
-      {/* Sidebar Lateral */}
-      <aside className="w-64 bg-slate-900 text-slate-300 flex flex-col hidden md:flex shadow-xl z-20 shrink-0">
-        <div className="p-6 flex items-center gap-3">
-          <div className="w-8 h-8 rounded bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl">+</div>
-          <span className="text-xl font-bold text-white tracking-wide">digit@l <span className="text-blue-400">plus+</span></span>
-        </div>
-        
-        <nav className="flex-1 px-4 py-4 space-y-2 overflow-y-auto">
-          <Link to="/dashboard" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
-            <LayoutDashboard size={20} /> Início
-          </Link>
-          <Link to="/crm" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
-            <Briefcase size={20} /> Funil de Vendas (CRM)
-          </Link>
-          <Link to="/clientes" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
-            <Users size={20} /> Clientes
-          </Link>
-          <Link to="/financeiro" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 transition-colors">
-            <DollarSign size={20} /> Financeiro
-          </Link>
-          <Link to="/relatorios" className="flex items-center gap-3 px-3 py-2 rounded-lg bg-blue-600 text-white shadow-lg shadow-blue-900/20">
-            <FileText size={20} /> Relatórios
-          </Link>
-        </nav>
-      </aside>
+      <Sidebar />
 
-      {/* Conteúdo Principal */}
       <main className="flex-1 flex flex-col min-w-0 overflow-y-auto">
-        
-        {/* Header Superior */}
         <header className="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-6 shrink-0 sticky top-0 z-10">
           <h1 className="text-2xl font-bold text-slate-800 flex items-center gap-2">Relatórios e Indicadores</h1>
           <div className="flex items-center gap-4">
@@ -52,11 +22,8 @@ export default function Relatorios() {
         </header>
 
         <div className="p-6 max-w-7xl mx-auto w-full space-y-6">
-          
-          {/* Blocos de Desempenho */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             
-            {/* Gráfico 1: Receita por Origem */}
             <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
               <h3 className="font-bold text-slate-800 mb-6 flex items-center gap-2">
                 <PieChart size={18} className="text-blue-600"/> Origem dos Clientes Fechados
@@ -92,20 +59,9 @@ export default function Relatorios() {
                     <div className="bg-purple-500 h-2 rounded-full" style={{width: '15%'}}></div>
                   </div>
                 </div>
-
-                <div>
-                  <div className="flex justify-between text-sm mb-1">
-                    <span className="font-medium text-slate-700">Formulário Site</span>
-                    <span className="font-bold text-slate-800">10%</span>
-                  </div>
-                  <div className="w-full bg-slate-100 rounded-full h-2">
-                    <div className="bg-emerald-500 h-2 rounded-full" style={{width: '10%'}}></div>
-                  </div>
-                </div>
               </div>
             </div>
 
-            {/* Gráfico 2: Conversão do Funil */}
             <div className="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
               <h3 className="font-bold text-slate-800 mb-6 flex items-center gap-2">
                 <TrendingUp size={18} className="text-blue-600"/> Taxa de Conversão do Funil
@@ -127,7 +83,6 @@ export default function Relatorios() {
               </div>
             </div>
 
-            {/* Tabela de Top Serviços */}
             <div className="lg:col-span-2 bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
               <h3 className="font-bold text-slate-800 mb-6 flex items-center gap-2">
                 <BarChart2 size={18} className="text-blue-600"/> Serviços Mais Vendidos
