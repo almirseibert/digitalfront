@@ -1,11 +1,15 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Users, DollarSign, FileText, Settings, Briefcase } from 'lucide-react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { 
+  LayoutDashboard, Users, DollarSign, FileText, 
+  Briefcase, Globe, LogOut 
+} from 'lucide-react';
 
 export default function Sidebar() {
   const location = useLocation();
   const currentPath = location.pathname;
   const isActive = (path) => currentPath === path;
+  const navigate = useNavigate();
 
   return (
     <aside className="w-64 bg-slate-900 text-slate-300 flex flex-col hidden md:flex shadow-xl z-20 shrink-0">
@@ -32,10 +36,13 @@ export default function Sidebar() {
         </Link>
       </nav>
 
-      <div className="p-4 border-t border-slate-800">
-        <Link to="/login" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-red-400 transition-colors">
-          <Settings size={20} /> Sair do Sistema
-        </Link>
+      <div className="p-4 border-t border-slate-800 space-y-2">
+        <button onClick={() => navigate('/')} className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors">
+          <Globe size={20} /> Voltar ao Site
+        </button>
+        <button onClick={() => navigate('/login')} className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-red-400 transition-colors">
+          <LogOut size={20} /> Sair do Sistema
+        </button>
       </div>
     </aside>
   );
