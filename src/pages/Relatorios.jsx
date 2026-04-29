@@ -2,11 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { 
   BarChart3, TrendingUp, Users, DollarSign, Calendar, Download, Filter, ArrowUpRight, ArrowDownRight, Loader2
 } from 'lucide-react';
-import Sidebar from '../components/Sidebar';
-import api from '../services/api';
 
-// Fallback component se o Sidebar não existir
-const DefaultSidebar = () => <div className="w-64 bg-slate-800 text-white p-4 h-full hidden md:block">Sidebar Placeholder</div>;
+// ⚠️ ATENÇÃO: DESCOMENTE ESTAS DUAS LINHAS NO SEU CÓDIGO REAL (VS CODE):
+// import Sidebar from '../components/Sidebar';
+// import api from '../services/api';
+
+// --- MOCK TEMPORÁRIO PARA O PREVIEW NÃO FALHAR (APAGUE NO SEU PROJETO) ---
+const Sidebar = () => <div className="w-64 bg-slate-800 text-white p-4 hidden md:block">Menu Lateral</div>;
+const api = { 
+  get: async () => ({ 
+    data: { success: true, data: { vendasFechadas: 0, receitaPrevista: 0, totalLeads: 0 } } 
+  }) 
+};
+// -------------------------------------------------------------------------
 
 export default function Relatorios() {
   const [periodo, setPeriodo] = useState('Este Mês');
@@ -24,25 +32,20 @@ export default function Relatorios() {
   const carregarRelatorios = async () => {
     try {
       setIsLoading(true);
-      // Aqui poderíamos enviar o periodo via query param: /relatorios?periodo=mensal
-      // Para já, vamos usar a rota dashboard que traz um resumo geral
       const response = await api.get('/relatorios/dashboard');
       
       if (response.data.success) {
         const resumo = response.data.data;
         
-        // Mapear os dados reais da API para os gráficos
         setDados({
           vendasTotais: resumo.vendasFechadas,
           financeiro: {
             receitas: Number(resumo.receitaPrevista),
-            despesas: 0, // Despesas podem ser implementadas numa rota específica do financeiro depois
+            despesas: 0, 
             lucro: Number(resumo.receitaPrevista)
           },
-          // Como o backend ainda não retorna o breakdown por fase do funil no /dashboard,
-          // mantemos a estrutura preparada. Num cenário ideal, criaríamos uma rota /relatorios/funil
           funil: {
-            prospeccao: resumo.totalLeads, // Simplificação para demonstração com dados reais
+            prospeccao: resumo.totalLeads, 
             qualificacao: Math.floor(resumo.totalLeads * 0.7),
             proposta: Math.floor(resumo.totalLeads * 0.4),
             ganho: resumo.vendasFechadas,
@@ -62,17 +65,9 @@ export default function Relatorios() {
     return Math.round((dados.funil.ganho / dados.funil.prospeccao) * 100);
   };
 
-  // Tenta carregar o Sidebar, se falhar usa o fallback
-  let SidebarComponent = DefaultSidebar;
-  try {
-     SidebarComponent = require('../components/Sidebar').default;
-  } catch(e) {
-      console.warn("Componente Sidebar não encontrado, usando fallback.");
-  }
-
   return (
     <div className="flex h-screen bg-slate-50 font-sans text-slate-800 overflow-hidden">
-      <SidebarComponent />
+      <Sidebar />
 
       <main className="flex-1 flex flex-col min-w-0 overflow-y-auto">
         <header className="bg-white border-b border-slate-200 h-16 flex items-center justify-between px-6 shrink-0 sticky top-0 z-10">
