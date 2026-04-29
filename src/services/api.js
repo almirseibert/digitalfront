@@ -20,7 +20,8 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 401) {
+    // MODIFICADO AQUI: Não recarregar a página se o erro 401 vier da própria tentativa de login!
+    if (error.response && error.response.status === 401 && !error.config.url.includes('/auth/login')) {
       localStorage.removeItem('digitalplus_token');
       localStorage.removeItem('digitalplus_user');
       window.location.href = '/login';
