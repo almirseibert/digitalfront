@@ -2,19 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { 
   BarChart3, TrendingUp, Users, DollarSign, Calendar, Download, Filter, ArrowUpRight, ArrowDownRight, Loader2
 } from 'lucide-react';
-
-// ⚠️ ATENÇÃO: DESCOMENTE ESTAS DUAS LINHAS NO SEU CÓDIGO REAL (VS CODE):
-// import Sidebar from '../components/Sidebar';
-// import api from '../services/api';
-
-// --- MOCK TEMPORÁRIO PARA O PREVIEW NÃO FALHAR (APAGUE NO SEU PROJETO) ---
-const Sidebar = () => <div className="w-64 bg-slate-800 text-white p-4 hidden md:block">Menu Lateral</div>;
-const api = { 
-  get: async () => ({ 
-    data: { success: true, data: { vendasFechadas: 0, receitaPrevista: 0, totalLeads: 0 } } 
-  }) 
-};
-// -------------------------------------------------------------------------
+import Sidebar from '../components/Sidebar';
+import api from '../services/api';
 
 export default function Relatorios() {
   const [periodo, setPeriodo] = useState('Este Mês');
