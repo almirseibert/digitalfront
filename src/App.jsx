@@ -9,6 +9,7 @@ import KanbanCRM from './pages/KanbanCRM';
 import ClientesList from './pages/ClientesList';
 import Financeiro from './pages/Financeiro';
 import Relatorios from './pages/Relatorios';
+import UsuariosAdmin from './pages/UsuariosAdmin';
 
 export default function App() {
   return (
