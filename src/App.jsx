@@ -19,6 +19,8 @@ export default function App() {
         
         {/* Rota de Login */}
         <Route path="/login" element={<Login />} />
+        <Route path="/usuarios" element={<UsuariosAdmin />} />
+
         
         {/* Rotas Privadas do CRM */}
         <Route path="/dashboard" element={<Dashboard />} />

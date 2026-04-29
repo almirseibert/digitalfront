@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   LayoutDashboard, Users, DollarSign, FileText, 
-  Briefcase, Globe, LogOut 
+  Briefcase, Globe, LogOut, ShieldCheck 
 } from 'lucide-react';
 
 export default function Sidebar() {
@@ -10,6 +10,8 @@ export default function Sidebar() {
   const currentPath = location.pathname;
   const isActive = (path) => currentPath === path;
   const navigate = useNavigate();
+  const usuarioAtual = JSON.parse(localStorage.getItem('digitalplus_user') || '{}');
+  const isSuperAdmin = usuarioAtual.email === 'almir.seibert@gmail.com';
 
   return (
     <aside className="w-64 bg-slate-900 text-slate-300 flex flex-col hidden md:flex shadow-xl z-20 shrink-0">
@@ -34,6 +36,11 @@ export default function Sidebar() {
         <Link to="/relatorios" className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${isActive('/relatorios') ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/20' : 'hover:bg-slate-800'}`}>
           <FileText size={20} /> Relatórios
         </Link>
+        {isSuperAdmin && (
+        <Link to="/usuarios" className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${isActive('/usuarios') ? 'bg-red-600/90 text-white shadow-lg' : 'hover:bg-slate-800'}`}>
+          <ShieldCheck size={20} /> Acessos
+        </Link>
+)}
       </nav>
 
       <div className="p-4 border-t border-slate-800 space-y-2">
